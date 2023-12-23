@@ -1,6 +1,6 @@
-package com.mid.bilweatherapp.JSON
+package com.mid.bilweatherapp.json
 
-import com.mid.bilweatherapp.Util.Constants
+import com.mid.bilweatherapp.util.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

@@ -7,9 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.ctis487.roomdatabaseex2.util.Constants
-import com.mid.bilweatherapp.db.DailyWeatherForecast
-import kotlinx.coroutines.flow.Flow
+import com.mid.bilweatherapp.util.Constants
 
 
 //Data Access Object: It contains all the methods used for accessing to the database. Inside it all the required queries will be created
@@ -30,7 +28,7 @@ interface DailyWeatherDAO {
     @Query("DELETE FROM ${Constants.TABLENAME}")
     fun deleteAllDailyWeatherForecasts()
 
-    @Query("SELECT * FROM ${Constants.TABLENAME} ORDER BY id ASC")
+    @Query("SELECT * FROM ${Constants.TABLENAME} ORDER BY date ASC")
     fun getAllDailyWeatherForecasts():LiveData<List<DailyWeatherForecast>>
 
     @Query("SELECT * FROM ${Constants.TABLENAME} WHERE location = :location and date = :date ")

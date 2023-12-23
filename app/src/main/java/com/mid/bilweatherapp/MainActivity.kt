@@ -1,6 +1,5 @@
 package com.mid.bilweatherapp
 
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.GestureDetector
@@ -11,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.mid.bilweatherapp.JSON.ApiService
-import com.mid.bilweatherapp.JSON.WeatherResponse
+import com.mid.bilweatherapp.json.ApiService
+import com.mid.bilweatherapp.json.WeatherResponse
 import com.mid.bilweatherapp.databinding.ActivityMainBinding
 import okhttp3.Response
 import retrofit2.Call

@@ -2,8 +2,9 @@ package com.mid.bilweatherapp.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.mid.bilweatherapp.util.Constants
 
-@Entity
+@Entity(tableName = Constants.TABLENAME)
 class DailyWeatherForecast {
     @PrimaryKey
     var location:String = ""

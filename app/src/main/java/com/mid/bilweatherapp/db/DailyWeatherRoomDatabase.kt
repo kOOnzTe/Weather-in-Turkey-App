@@ -4,8 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.ctis487.roomdatabaseex2.util.Constants
-import com.mid.bilweatherapp.db.DailyWeatherForecast
+import com.mid.bilweatherapp.util.Constants
 
 /*
 If you change anything on the database like adding a field to table, chnaging type of a filed, deleting a filed, changing the name of the field
