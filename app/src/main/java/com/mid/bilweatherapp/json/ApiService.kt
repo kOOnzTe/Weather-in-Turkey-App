@@ -6,8 +6,8 @@ import retrofit2.http.QueryMap
 
 interface ApiService {
 
-    @GET("forecast.json")
-    fun getWeather(@QueryMap param: HashMap<String, String>): Call<WeatherResponse>
+    @GET("forecast.json?key=87c3372fc7fd4e0cb52191243232312&q=Ankara&days=7&aqi=no&alerts=no")
+    fun getWeather(/*@QueryMap param: HashMap<String, String>*/): Call<WeatherResponse>
 
     /*@GET("v1/forecast.json")
     fun getWeatherForecast(

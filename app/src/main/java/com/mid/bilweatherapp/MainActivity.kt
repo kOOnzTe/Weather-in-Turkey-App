@@ -13,17 +13,19 @@ import com.google.android.material.snackbar.Snackbar
 import com.mid.bilweatherapp.json.ApiService
 import com.mid.bilweatherapp.json.WeatherResponse
 import com.mid.bilweatherapp.databinding.ActivityMainBinding
+import com.mid.bilweatherapp.json.ApiClient
 import okhttp3.Response
 import retrofit2.Call
 import retrofit2.Callback
 
 class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.RecyclerAdapterInterface {
 
+    lateinit var weatherService: ApiService
     private lateinit var binding: ActivityMainBinding
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var adapter: DailyForecastRecyclerViewAdapter
     private var gestureDetector: GestureDetectorCompat? = null
-    lateinit var weatherService: ApiService
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,13 +62,14 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
         // JSON REQUEST
         val dt: HashMap<String, String> = HashMap()
 
-        dt["apiKey"] = "87c3372fc7fd4e0cb52191243232312" // int
-        dt["location"] = "Ankara"
-        dt["days"] = "7" // int
-        dt["aqi"] = "no"
-        dt["alerts"] = "no"
+        //dt["apiKey"] = "87c3372fc7fd4e0cb52191243232312" // int
+        //dt["location"] = "Ankara"
+        //dt["days"] = "7" // int
+        //dt["aqi"] = "no"
+        //dt["alerts"] = "no"
 
-        var requestWithKey = weatherService.getWeather(dt)
+        weatherService = ApiClient.getClient().create(ApiService::class.java)
+        var requestWithKey = weatherService.getWeather()
 
         requestWithKey.clone().enqueue(object : Callback<WeatherResponse> {
             override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
@@ -77,7 +80,8 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
                 Log.d("JSONARRAYPARSE", "Response taken, button clicked")
                 if (response.isSuccessful) {
                     //Constants.bookList = (response.body() as Books).books
-
+                    var test = response.body() as WeatherResponse
+                    Log.d("cum", test.toString())
                     //adapter.setData(Constants.bookList!!)
                 }
             }
