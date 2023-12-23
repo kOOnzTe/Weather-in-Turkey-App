@@ -2,14 +2,21 @@ package com.mid.bilweatherapp
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.mid.bilweatherapp.JSON.ApiService
+import com.mid.bilweatherapp.JSON.WeatherResponse
 import com.mid.bilweatherapp.databinding.ActivityMainBinding
+import okhttp3.Response
+import retrofit2.Call
+import retrofit2.Callback
 
 class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.RecyclerAdapterInterface {
 
@@ -17,6 +24,7 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var adapter: DailyForecastRecyclerViewAdapter
     private var gestureDetector: GestureDetectorCompat? = null
+    lateinit var weatherService: ApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +56,34 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
             gestureDetector?.onTouchEvent(event)
             true
         }
+
+
+        // JSON REQUEST
+        val dt: HashMap<String, String> = HashMap()
+
+        dt["apiKey"] = "87c3372fc7fd4e0cb52191243232312" // int
+        dt["location"] = "Ankara"
+        dt["days"] = "7" // int
+        dt["aqi"] = "no"
+        dt["alerts"] = "no"
+
+        var requestWithKey = weatherService.getWeather(dt)
+
+        requestWithKey.clone().enqueue(object : Callback<WeatherResponse> {
+            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
+                Toast.makeText(applicationContext, "OLMADI", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<WeatherResponse>, response: retrofit2.Response<WeatherResponse>) {
+                Log.d("JSONARRAYPARSE", "Response taken, button clicked")
+                if (response.isSuccessful) {
+                    //Constants.bookList = (response.body() as Books).books
+
+                    //adapter.setData(Constants.bookList!!)
+                }
+            }
+        })
+
     }
 
     override fun displayItem(weather: DailyForecast) {
