@@ -1,5 +1,6 @@
 package com.mid.bilweatherapp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.GestureDetector
@@ -14,9 +15,11 @@ import com.mid.bilweatherapp.json.ApiService
 import com.mid.bilweatherapp.json.WeatherResponse
 import com.mid.bilweatherapp.databinding.ActivityMainBinding
 import com.mid.bilweatherapp.json.ApiClient
-import okhttp3.Response
+import retrofit2.Response
 import retrofit2.Call
 import retrofit2.Callback
+import android.media.MediaPlayer
+import androidx.core.content.ContentProviderCompat.requireContext
 
 class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.RecyclerAdapterInterface {
 
@@ -25,8 +28,8 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var adapter: DailyForecastRecyclerViewAdapter
     private var gestureDetector: GestureDetectorCompat? = null
-
-
+    private lateinit var mediaPlayer: MediaPlayer
+    @SuppressLint("ClickableViewAccessibility") // to remove gestureDetector warning
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -36,6 +39,20 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
 
         // Hiding the status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+
+        // Initial JSON Requests
+        getWeatherData("Ankara")
+        getWeatherData("Istanbul")
+        getWeatherData("Izmir")
+        // TODO: Burada tek bir initial request kalsın mesela Ankara olan (açılışta ekranda gözüksün diye), sonrasında userdan (mesela textview inputundan) şehir ismi alıp bu fonksiyonun parametresine koyulacak, fonksiyon json request atacak. ama bu user input işi büyük ihtimalle onClick'te falan olmalı onCreate yerine.
+
+        // Sound
+        mediaPlayer = MediaPlayer.create(this, R.raw.weathermusic)
+        if (this::mediaPlayer.isInitialized) {
+            mediaPlayer.start()
+            mediaPlayer.isLooping = true
+        }
 
         // Prepare the data for the RecyclerView
         DailyForecastSys.prepareData()
@@ -59,38 +76,37 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
         }
 
 
-        // JSON REQUEST
-        val dt: HashMap<String, String> = HashMap()
-
-        //dt["apiKey"] = "87c3372fc7fd4e0cb52191243232312" // int
-        //dt["location"] = "Ankara"
-        //dt["days"] = "7" // int
-        //dt["aqi"] = "no"
-        //dt["alerts"] = "no"
-
-        weatherService = ApiClient.getClient().create(ApiService::class.java)
-        var requestWithKey = weatherService.getWeather()
-
-        requestWithKey.clone().enqueue(object : Callback<WeatherResponse> {
-            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
-                Toast.makeText(applicationContext, "OLMADI", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onResponse(call: Call<WeatherResponse>, response: retrofit2.Response<WeatherResponse>) {
-                Log.d("JSONARRAYPARSE", "Response taken, button clicked")
-                if (response.isSuccessful) {
-                    //Constants.bookList = (response.body() as Books).books
-                    var test = response.body() as WeatherResponse
-                    Log.d("cum", test.toString())
-                    //adapter.setData(Constants.bookList!!)
-                }
-            }
-        })
 
     }
 
     override fun displayItem(weather: DailyForecast) {
 
+    }
+
+    private fun getWeatherData(location: String) {
+        val apiKey = "87c3372fc7fd4e0cb52191243232312"
+        val days = 7
+        val aqi = "no"
+        val alerts = "no"
+
+        weatherService = ApiClient.getClient().create(ApiService::class.java)
+        val requestWithKey = weatherService.getWeather(apiKey, location, days, aqi, alerts)
+
+        requestWithKey.clone().enqueue(object : Callback<WeatherResponse> {
+            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
+                Log.e("API Call", "Failed: ${t.message}")
+            }
+
+            override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
+                if (response.isSuccessful) {
+                    val weatherResponse = response.body()
+                    Log.d("API Call", "Success: $weatherResponse")
+                    // TODO: DATA WILL BE TAKEN FROM HERE INTO DATABASE
+                } else {
+                    Log.e("API Call", "Error: ${response.code()}")
+                }
+            }
+        })
     }
 
     inner class CustomGesture : GestureDetector.SimpleOnGestureListener() {

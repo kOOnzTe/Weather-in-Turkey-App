@@ -11,7 +11,6 @@ data class WeatherResponse (
 
 )
 
-
 data class Location (
 
     @SerializedName("name"            ) var name           : String? = null,
@@ -25,8 +24,6 @@ data class Location (
 
 )
 
-
-
 data class Condition (
 
     @SerializedName("text" ) var text : String? = null,
@@ -39,8 +36,8 @@ data class Current (
 
     @SerializedName("last_updated_epoch" ) var lastUpdatedEpoch : Int?       = null,
     @SerializedName("last_updated"       ) var lastUpdated      : String?    = null,
-    @SerializedName("temp_c"             ) var tempC            : Int?       = null,
-    @SerializedName("temp_f"             ) var tempF            : Int?       = null,
+    @SerializedName("temp_c"             ) var tempC            : Double?       = null,
+    @SerializedName("temp_f"             ) var tempF            : Double?       = null,
     @SerializedName("is_day"             ) var isDay            : Int?       = null,
     @SerializedName("condition"          ) var condition        : Condition? = Condition(),
     @SerializedName("wind_mph"           ) var windMph          : Double?    = null,
@@ -62,7 +59,6 @@ data class Current (
     @SerializedName("gust_kph"           ) var gustKph          : Double?    = null
 
 )
-
 
 data class Day (
 
@@ -88,7 +84,6 @@ data class Day (
     @SerializedName("uv"                   ) var uv                : Int?       = null
 
 )
-
 
 data class Astro (
 
@@ -141,7 +136,6 @@ data class Hour (
     @SerializedName("uv"             ) var uv           : Int?       = null
 
 )
-
 
 data class Forecastday (
 

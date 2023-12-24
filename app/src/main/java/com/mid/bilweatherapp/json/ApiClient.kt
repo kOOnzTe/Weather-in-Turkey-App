@@ -11,7 +11,7 @@ object ApiClient {
     fun getClient(): Retrofit {
         if (retrofit == null)
             retrofit = Retrofit.Builder()
-                .baseUrl(Constants.requestUrl)
+                .baseUrl(Constants.REQUESTURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
