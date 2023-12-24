@@ -1,12 +1,12 @@
 package com.mid.bilweatherapp
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,14 +19,14 @@ import retrofit2.Response
 import retrofit2.Call
 import retrofit2.Callback
 import android.media.MediaPlayer
-import androidx.core.content.ContentProviderCompat.requireContext
 
 class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.RecyclerAdapterInterface {
 
     lateinit var weatherService: ApiService
     private lateinit var binding: ActivityMainBinding
     private lateinit var layoutManager: LinearLayoutManager
-    private lateinit var adapter: DailyForecastRecyclerViewAdapter
+    private lateinit var dailyForecastAdapter: DailyForecastRecyclerViewAdapter
+
     private var gestureDetector: GestureDetectorCompat? = null
     private lateinit var mediaPlayer: MediaPlayer
     @SuppressLint("ClickableViewAccessibility") // to remove gestureDetector warning
@@ -63,8 +63,8 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
         binding.recyclerSocial.layoutManager = layoutManager
 
         // Fill the RecyclerView with the adapter
-        adapter = DailyForecastRecyclerViewAdapter(this, DailyForecastSys.dailyForecasts)
-        binding.recyclerSocial.adapter = adapter
+        dailyForecastAdapter = DailyForecastRecyclerViewAdapter(this, DailyForecastSys.dailyForecasts)
+        binding.recyclerSocial.adapter = dailyForecastAdapter
 
         // Combined GestureDetector for both "long-press" and "double-tap" Gestures
         gestureDetector = GestureDetectorCompat(this, CustomGesture())
@@ -73,6 +73,15 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
         binding.root.setOnTouchListener { _, event ->
             gestureDetector?.onTouchEvent(event)
             true
+        }
+
+        binding.weeklySeeMore.setOnClickListener {
+            try {
+                val intent = Intent(this, WeeklyForecastActivity::class.java)
+                startActivity(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
 

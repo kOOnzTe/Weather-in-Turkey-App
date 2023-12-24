@@ -118,7 +118,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/hourly_description_layout"
+        android:id="@+id/weekly_day_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/description_layout"
@@ -155,7 +155,7 @@
         android:id="@+id/hourly_desc_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/hourly_description_layout"
+        android:layout_below="@+id/weekly_day_description"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/rounded_rectangle_background">
@@ -255,6 +255,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/weeklySeeMore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

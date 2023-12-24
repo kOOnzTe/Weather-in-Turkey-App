@@ -84,5 +84,7 @@
         <item>Yozgat</item>
         <item>Zonguldak</item>
     </string-array>
+    <string name="title_activity_weekly_forecast">WeeklyForecastActivity</string>
+
 
 </resources>
