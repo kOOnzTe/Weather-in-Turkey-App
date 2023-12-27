@@ -23,6 +23,7 @@ object MainSys {
     lateinit var workManager: WorkManager
     lateinit var workRequest: PeriodicWorkRequest
     lateinit var dailyWeatherVM : DailyWeatherViewModel
+    var currentC: Double = 0.0
     fun getWeatherData(location: String) {
         val apiKey = "87c3372fc7fd4e0cb52191243232312"
         val days = 7
@@ -55,6 +56,7 @@ object MainSys {
                             temp.day?.maxwindKph.toString()
                         )
                         dailyWeatherVM.addForecast(dailyTemp)
+                        currentC = weatherResponse.current?.tempC!!.toDouble()
                         Log.d("DBTest", dailyTemp.condition.toString())
                     }
 

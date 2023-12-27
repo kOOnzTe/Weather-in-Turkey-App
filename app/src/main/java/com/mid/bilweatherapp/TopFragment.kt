@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.mid.bilweatherapp.databinding.FragmentTopBinding
 import com.mid.bilweatherapp.db.DailyWeatherForecast
+import com.squareup.picasso.Picasso
 
 class TopFragment : Fragment() {
     private lateinit var binding: FragmentTopBinding
@@ -24,10 +25,13 @@ class TopFragment : Fragment() {
     fun updateView(currentTemp: Double, weather: DailyWeatherForecast) {
         binding.textTemp.text = currentTemp.toInt().toString() + getString(R.string.txtTemperatureShort)
         binding.textHumidity.text = weather.humidity + "%"
-        binding.textWind.text = weather.humidity + " " + getString(R.string.txtWindSpeedMeasurement)
-        if(weather.condition!!.contains("rain", true)){
-            binding.weatherIcon.setImageResource(R.drawable.cloudy)
-        }
+        binding.textWind.text = weather.wind_kph + " " + getString(R.string.txtWindSpeedMeasurement)
+
+        Picasso.get().load("https://"+ weather.icon)
+            .resize(100,100) //optional, Transform images to better fit into layouts and to reduce memory size.
+            .centerCrop() //optional, Transform images to better fit into layouts and to reduce memory size.
+            .error(R.drawable.sunny)//optional, Picasso supports both download and error placeholders as optional features
+            .into(binding.weatherIcon) //taken image will be displayed on imgItemRecipe view.
 
         Log.i("FRAGMENT","Fragment updated")
     }

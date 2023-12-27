@@ -89,6 +89,8 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
         dailyForecastAdapter = DailyForecastRecyclerViewAdapter(this)
         binding.recyclerSocial.adapter = dailyForecastAdapter
 
+
+
         // Combined GestureDetector for both "long-press" and "double-tap" Gestures
         gestureDetector = GestureDetectorCompat(this, CustomGesture())
 
@@ -116,8 +118,8 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
     inner class CustomGesture : GestureDetector.SimpleOnGestureListener() {
         override fun onDoubleTap(e: MotionEvent): Boolean { // due to prevent 2 times Snackbar, we used onDoubleTap instead of onDoubleTapEvent
             Snackbar.make(binding.root, "Refreshing the list!", Snackbar.LENGTH_SHORT).show()
-            var currentC = MainSys.getWeatherData(currentCity)
-            fragment.updateView("Cloudy", 0.0, "34", "99")
+            MainSys.getWeatherData(currentCity)
+            fragment.updateView(MainSys.currentC, dailyForecastAdapter.dailyWeatherList.get(0))
             return true
         }
 
@@ -141,6 +143,7 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
         //Whenever data is changed that change will refresh the recyclerview
         dailyWeatherVM.readAllData.observe(this, Observer { customers ->
             dailyForecastAdapter.setData(customers)
+            fragment.updateView(MainSys.currentC, dailyForecastAdapter.dailyWeatherList.get(0))
         })
     }
 }
