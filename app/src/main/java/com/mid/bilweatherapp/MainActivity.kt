@@ -22,7 +22,6 @@ import android.media.MediaPlayer
 
 class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.RecyclerAdapterInterface {
 
-    lateinit var weatherService: ApiService
     private lateinit var binding: ActivityMainBinding
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var dailyForecastAdapter: DailyForecastRecyclerViewAdapter
@@ -40,11 +39,10 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
         // Hiding the status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
+        MainSys.setWorker(this)
 
         // Initial JSON Requests
-        getWeatherData("Ankara")
-        getWeatherData("Istanbul")
-        getWeatherData("Izmir")
+        MainSys.getWeatherData("Ankara")
         // TODO: Burada tek bir initial request kalsın mesela Ankara olan (açılışta ekranda gözüksün diye), sonrasında userdan (mesela textview inputundan) şehir ismi alıp bu fonksiyonun parametresine koyulacak, fonksiyon json request atacak. ama bu user input işi büyük ihtimalle onClick'te falan olmalı onCreate yerine.
 
         // Sound
@@ -90,32 +88,6 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
 
     override fun displayItem(weather: DailyForecast) {
 
-    }
-
-    private fun getWeatherData(location: String) {
-        val apiKey = "87c3372fc7fd4e0cb52191243232312"
-        val days = 7
-        val aqi = "no"
-        val alerts = "no"
-
-        weatherService = ApiClient.getClient().create(ApiService::class.java)
-        val requestWithKey = weatherService.getWeather(apiKey, location, days, aqi, alerts)
-
-        requestWithKey.clone().enqueue(object : Callback<WeatherResponse> {
-            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
-                Log.e("API Call", "Failed: ${t.message}")
-            }
-
-            override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
-                if (response.isSuccessful) {
-                    val weatherResponse = response.body()
-                    Log.d("API Call", "Success: $weatherResponse")
-                    // TODO: DATA WILL BE TAKEN FROM HERE INTO DATABASE
-                } else {
-                    Log.e("API Call", "Error: ${response.code()}")
-                }
-            }
-        })
     }
 
     inner class CustomGesture : GestureDetector.SimpleOnGestureListener() {

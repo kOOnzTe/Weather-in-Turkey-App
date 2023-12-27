@@ -1,0 +1,55 @@
+package com.mid.bilweatherapp
+
+import android.content.Context
+import android.util.Log
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
+import com.mid.bilweatherapp.json.ApiClient
+import com.mid.bilweatherapp.json.ApiService
+import com.mid.bilweatherapp.json.WeatherResponse
+import com.mid.bilweatherapp.worker.CustomWorker
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.concurrent.TimeUnit
+object MainSys {
+    lateinit var weatherService: ApiService
+    lateinit var workManager: WorkManager
+    lateinit var workRequest: PeriodicWorkRequest
+    fun getWeatherData(location: String) {
+        val apiKey = "87c3372fc7fd4e0cb52191243232312"
+        val days = 7
+        val aqi = "no"
+        val alerts = "no"
+
+        weatherService = ApiClient.getClient().create(ApiService::class.java)
+        val requestWithKey = weatherService.getWeather(apiKey, location, days, aqi, alerts)
+
+        requestWithKey.clone().enqueue(object : Callback<WeatherResponse> {
+            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
+                Log.e("API Call", "Failed: ${t.message}")
+            }
+
+            override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
+                if (response.isSuccessful) {
+                    val weatherResponse = response.body()
+                    Log.d("API Call", "Success: $weatherResponse")
+                    // TODO: DATA WILL BE TAKEN FROM HERE INTO DATABASE
+                } else {
+                    Log.e("API Call", "Error: ${response.code()}")
+                }
+            }
+        })
+    }
+    fun setWorker(context: Context) {
+        val constraints: Constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        var workRequest = PeriodicWorkRequest.Builder(CustomWorker::class.java, 1, TimeUnit.HOURS).setConstraints(constraints).build();
+        workManager = WorkManager.getInstance(context)
+        workManager.enqueue(workRequest)
+    }
+}
