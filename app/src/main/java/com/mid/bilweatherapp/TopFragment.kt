@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.mid.bilweatherapp.databinding.FragmentTopBinding
+import com.mid.bilweatherapp.db.DailyWeatherForecast
 
 class TopFragment : Fragment() {
     private lateinit var binding: FragmentTopBinding
@@ -20,11 +21,11 @@ class TopFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    fun updateView(weather:String, temp:Double, humidity: String, wind:String ) {
-        binding.textTemp.text = temp.toInt().toString() + getString(R.string.txtTemperatureShort)
-        binding.textHumidity.text = humidity + "%"
-        binding.textWind.text = wind + " " + getString(R.string.txtWindSpeedMeasurement)
-        if(weather.equals("Cloudy")){
+    fun updateView(currentTemp: Double, weather: DailyWeatherForecast) {
+        binding.textTemp.text = currentTemp.toInt().toString() + getString(R.string.txtTemperatureShort)
+        binding.textHumidity.text = weather.humidity + "%"
+        binding.textWind.text = weather.humidity + " " + getString(R.string.txtWindSpeedMeasurement)
+        if(weather.condition!!.contains("rain", true)){
             binding.weatherIcon.setImageResource(R.drawable.cloudy)
         }
 
