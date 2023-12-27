@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">BilWeatherApp</string>
     <string name="btn_goBack">Go Back</string>
+    <string name="txtTemperatureShort">°</string>
+    <string name="txtTemperatureLong">°C</string>
+    <string name="txtWindSpeedMeasurement">km/h</string>
+
 
     <string-array name="city_list">
         <item>Ankara</item>
