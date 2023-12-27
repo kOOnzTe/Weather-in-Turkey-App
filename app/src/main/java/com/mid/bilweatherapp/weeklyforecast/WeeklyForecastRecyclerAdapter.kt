@@ -8,16 +8,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mid.bilweatherapp.R
+import com.mid.bilweatherapp.db.DailyWeatherForecast
 
 class WeeklyForecastRecyclerAdapter(
     private val context: Context,
-    private val weeklyForecastList: ArrayList<WeeklyForecast>
+    private val weeklyForecastList: ArrayList<DailyWeatherForecast>
 ) :
     RecyclerView.Adapter<WeeklyForecastRecyclerAdapter.ViewHolder>() {
 
 
     interface RecyclerAdapterInterface {
-        fun displayItem(weather: WeeklyForecast)
+        fun displayItem(weather: DailyWeatherForecast)
     }
 
     private val recyclerAdapterInterface: WeeklyForecastRecyclerAdapter.RecyclerAdapterInterface =
@@ -33,20 +34,12 @@ class WeeklyForecastRecyclerAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = weeklyForecastList[position]
 
-        holder.weeklyDayTitle.text = currentItem.weeklyDayTitle
-        holder.morningTitle.text = currentItem.morningTitle
-        holder.morningIcon.setImageResource(currentItem.morningIconResId)
-        holder.morningWeatherDesc.text = currentItem.morningWeatherDesc
-        holder.morningDegree.text = currentItem.morningDegree
+        holder.weeklyDayTitle.text = currentItem.date
+        holder.maxCTv.text = currentItem.maxTemp.toString()
+        holder.minCTv.text = currentItem.minTemp.toString()
+        holder.humidityTv.text = currentItem.humidity
+        holder.windTv.text = currentItem.wind_kph
 
-        holder.nightTitle.text = currentItem.nightTitle
-        holder.nightIcon.setImageResource(currentItem.nightIconResId)
-        holder.nightWeatherDesc.text = currentItem.nightWeatherDesc
-        holder.nightDegree.text = currentItem.nightDegree
-
-        holder.itemView.setOnClickListener {
-            recyclerAdapterInterface.displayItem(currentItem)
-        }
     }
 
     override fun getItemCount(): Int {
@@ -55,14 +48,11 @@ class WeeklyForecastRecyclerAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val weeklyDayTitle:TextView = itemView.findViewById(R.id.weekly_recycler_desc)
-        val morningTitle: TextView = itemView.findViewById(R.id.morning_title)
         val morningIcon: ImageView = itemView.findViewById(R.id.morning_icon)
-        val morningWeatherDesc: TextView = itemView.findViewById(R.id.morning_weather_desc)
-        val morningDegree: TextView = itemView.findViewById(R.id.morning_degree)
-        val nightTitle: TextView = itemView.findViewById(R.id.night_title)
-        val nightIcon: ImageView = itemView.findViewById(R.id.night_icon)
-        val nightWeatherDesc: TextView = itemView.findViewById(R.id.night_weather_desc)
-        val nightDegree: TextView = itemView.findViewById(R.id.night_degree)
+        val maxCTv: TextView = itemView.findViewById(R.id.maxCTv)
+        val minCTv: TextView = itemView.findViewById(R.id.minCTv)
+        val humidityTv: TextView = itemView.findViewById(R.id.humidity_tv)
+        val windTv: TextView = itemView.findViewById(R.id.wind_tv)
     }
 
 

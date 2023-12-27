@@ -7,7 +7,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mid.bilweatherapp.databinding.ActivityWeeklyForecastBinding
-import com.mid.bilweatherapp.weeklyforecast.WeeklyForecast
+import com.mid.bilweatherapp.db.DailyWeatherForecast
 import com.mid.bilweatherapp.weeklyforecast.WeeklyForecastRecyclerAdapter
 import com.mid.bilweatherapp.weeklyforecast.WeeklyForecastSys
 
@@ -45,7 +45,7 @@ class WeeklyForecastActivity : AppCompatActivity(), WeeklyForecastRecyclerAdapte
 
     }
 
-    override fun displayItem(weather: WeeklyForecast) {
+    override fun displayItem(weather: DailyWeatherForecast) {
         Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT).show()
     }
 }

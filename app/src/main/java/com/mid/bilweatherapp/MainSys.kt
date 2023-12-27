@@ -39,6 +39,7 @@ object MainSys {
 
             override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
                 if (response.isSuccessful) {
+                    dailyWeatherVM.deleteAllForecasts()
                     val weatherResponse = response.body()
                     //Log.d("API Call", "Success: $weatherResponse")
                     // TODO: DATA WILL BE TAKEN FROM HERE INTO DATABASE
@@ -49,7 +50,9 @@ object MainSys {
                             temp.day?.maxtempC,
                             temp.day?.mintempC,
                             temp.day?.condition?.text,
-                            temp.day?.condition?.icon
+                            temp.day?.condition?.icon,
+                            temp.day?.avghumidity.toString(),
+                            temp.day?.maxwindKph.toString()
                         )
                         dailyWeatherVM.addForecast(dailyTemp)
                         Log.d("DBTest", dailyTemp.condition.toString())

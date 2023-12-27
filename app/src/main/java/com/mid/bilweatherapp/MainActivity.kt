@@ -15,7 +15,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.core.view.get
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.mid.bilweatherapp.db.DailyWeatherForecast
 import com.mid.bilweatherapp.db.DailyWeatherViewModel
 
 class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.RecyclerAdapterInterface {
@@ -45,6 +48,7 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         dailyWeatherVM = ViewModelProvider(this).get(DailyWeatherViewModel::class.java)
+        getData()
         MainSys.dailyWeatherVM = dailyWeatherVM
 
         //sets worker
@@ -67,7 +71,7 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
         }
 
         // Prepare the data for the RecyclerView
-        DailyForecastSys.prepareData()
+        //DailyForecastSys.prepareData()
 
         // Set up the RecyclerView
         layoutManager = LinearLayoutManager(this)
@@ -75,7 +79,7 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
         binding.recyclerSocial.layoutManager = layoutManager
 
         // Fill the RecyclerView with the adapter
-        dailyForecastAdapter = DailyForecastRecyclerViewAdapter(this, DailyForecastSys.dailyForecasts)
+        dailyForecastAdapter = DailyForecastRecyclerViewAdapter(this)
         binding.recyclerSocial.adapter = dailyForecastAdapter
 
         // Combined GestureDetector for both "long-press" and "double-tap" Gestures
@@ -98,7 +102,7 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
 
     }
 
-    override fun displayItem(weather: DailyForecast) {
+    override fun displayItem(weather: DailyWeatherForecast) {
 
     }
     fun loadFrag(dynamicFragment: Fragment) {
@@ -124,6 +128,13 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
         override fun onLongPress(e: MotionEvent) {
             Snackbar.make(binding.root, "Long press gesture detected on the weather app!", Snackbar.LENGTH_SHORT).show()
         }
+    }
+
+    fun getData() {
+        //Whenever data is changed that change will refresh the recyclerview
+        dailyWeatherVM.readAllData.observe(this, Observer { customers ->
+            dailyForecastAdapter.setData(customers)
+        })
     }
 }
 
