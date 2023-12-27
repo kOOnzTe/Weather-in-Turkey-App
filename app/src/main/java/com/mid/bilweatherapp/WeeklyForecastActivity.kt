@@ -39,6 +39,10 @@ class WeeklyForecastActivity : AppCompatActivity(), WeeklyForecastRecyclerAdapte
             Toast.makeText(this, "Error setting up the forecast view", Toast.LENGTH_LONG).show()
         }
 
+        binding.btnGoBack.setOnClickListener {
+            finish()
+        }
+
     }
 
     override fun displayItem(weather: WeeklyForecast) {
