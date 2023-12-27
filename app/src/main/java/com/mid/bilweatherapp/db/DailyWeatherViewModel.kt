@@ -19,34 +19,34 @@ class DailyWeatherViewModel(application:Application):AndroidViewModel(applicatio
         repository = DailyWeatherRepository(dailyWeatherDAO)
         readAllData = repository.readAlldata
     }
-    fun addCustomer(dailyWeatherForecast:DailyWeatherForecast){
+    fun addForecast(dailyWeatherForecast:DailyWeatherForecast){
         viewModelScope.launch(Dispatchers.IO){ // that code will be run in background thread, coroutine scope
             repository.insertDailyWeatherForecast(dailyWeatherForecast)
         }
     }
-    fun addCustomers(dailyWeatherForecasts: List<DailyWeatherForecast>){
+    fun addForecast(dailyWeatherForecasts: List<DailyWeatherForecast>){
         viewModelScope.launch(Dispatchers.IO) { // that code will be run in background thread, coroutine scope
             dailyWeatherForecasts.forEach{
                 repository.insertDailyWeatherForecast(it)
             }
         }
     }
-    fun deleteCustomer(dailyWeatherForecast:DailyWeatherForecast){
+    fun deleteForecast(dailyWeatherForecast:DailyWeatherForecast){
         viewModelScope.launch(Dispatchers.IO){ // that code will be run in background thread, coroutine scope
             repository.deleteDailyWeatherForecast(dailyWeatherForecast)
         }
     }
-    fun deleteAllCustomer(){
+    fun deleteAllForecasts(){
         viewModelScope.launch(Dispatchers.IO){ // that code will be run in background thread, coroutine scope
             repository.deleteAllDailyWeatherForecasts()
         }
     }
-    fun updateCustomer(dailyWeatherForecast:DailyWeatherForecast){
+    fun updateForecast(dailyWeatherForecast:DailyWeatherForecast){
         viewModelScope.launch(Dispatchers.IO){ // that code will be run in background thread, coroutine scope
             repository.updateDailyWeatherForecast(dailyWeatherForecast)
         }
     }
-    fun searchCustomer(location:String, date: String):DailyWeatherForecast{
+    fun searchForecast(location:String, date: String):DailyWeatherForecast{
             return repository.getDailyWeatherForecast(location, date)
     }
 }

@@ -7,6 +7,7 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.mid.bilweatherapp.db.DailyWeatherForecast
+import com.mid.bilweatherapp.db.DailyWeatherViewModel
 import com.mid.bilweatherapp.json.ApiClient
 import com.mid.bilweatherapp.json.ApiService
 import com.mid.bilweatherapp.json.WeatherResponse
@@ -21,6 +22,7 @@ object MainSys {
     lateinit var weatherService: ApiService
     lateinit var workManager: WorkManager
     lateinit var workRequest: PeriodicWorkRequest
+    lateinit var dailyWeatherVM : DailyWeatherViewModel
     fun getWeatherData(location: String) {
         val apiKey = "87c3372fc7fd4e0cb52191243232312"
         val days = 7
@@ -49,6 +51,7 @@ object MainSys {
                             temp.day?.condition?.text,
                             temp.day?.condition?.icon
                         )
+                        dailyWeatherVM.addForecast(dailyTemp)
                         Log.d("DBTest", dailyTemp.condition.toString())
                     }
                 } else {

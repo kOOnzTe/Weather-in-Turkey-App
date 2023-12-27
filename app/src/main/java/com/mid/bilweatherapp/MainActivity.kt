@@ -19,12 +19,15 @@ import retrofit2.Response
 import retrofit2.Call
 import retrofit2.Callback
 import android.media.MediaPlayer
+import androidx.lifecycle.ViewModelProvider
+import com.mid.bilweatherapp.db.DailyWeatherViewModel
 
 class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.RecyclerAdapterInterface {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var dailyForecastAdapter: DailyForecastRecyclerViewAdapter
+    private lateinit var dailyWeatherVM : DailyWeatherViewModel
 
     private var gestureDetector: GestureDetectorCompat? = null
     private lateinit var mediaPlayer: MediaPlayer
@@ -38,6 +41,9 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
 
         // Hiding the status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+        dailyWeatherVM = ViewModelProvider(this).get(DailyWeatherViewModel::class.java)
+        MainSys.dailyWeatherVM = dailyWeatherVM
 
         MainSys.setWorker(this)
 
