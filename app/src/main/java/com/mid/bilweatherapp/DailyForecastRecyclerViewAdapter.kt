@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.mid.bilweatherapp.db.DailyWeatherForecast
 
 class DailyForecastRecyclerViewAdapter(
     private val context: Context,
