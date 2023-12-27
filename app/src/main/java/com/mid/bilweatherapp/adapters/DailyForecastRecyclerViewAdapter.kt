@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mid.bilweatherapp.db.DailyWeatherForecast
+import com.mid.bilweatherapp.util.Constants
 import java.util.ArrayList
 import java.util.Locale
 
@@ -32,7 +33,7 @@ class DailyForecastRecyclerViewAdapter(private val context: Context): RecyclerVi
 
     override fun onBindViewHolder(holder: DailyViewHolder, position: Int) {
         val dailyWeather = dailyWeatherList[position]
-        holder.dailyDate.text = findDayOfWeek(dailyWeather.date)
+        holder.dailyDate.text = Constants.findDayOfWeek(dailyWeather.date)
         //holder.dailyIcon.setImageResource(dailyWeather.icon)
         holder.dailyDesc.text = dailyWeather.condition
         holder.dailyMostTemp.text = dailyWeather.maxTemp?.toInt().toString()
@@ -55,16 +56,4 @@ class DailyForecastRecyclerViewAdapter(private val context: Context): RecyclerVi
         var dailyLeastTemp: TextView = itemView.findViewById(R.id.daily_least_temp)
     }
 
-    fun findDayOfWeek(dateString: String): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-        val date = sdf.parse(dateString)
-
-        val calendar = Calendar.getInstance()
-        calendar.time = date
-
-        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-
-        val days = arrayOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
-        return days[dayOfWeek - 1]
-    }
 }
