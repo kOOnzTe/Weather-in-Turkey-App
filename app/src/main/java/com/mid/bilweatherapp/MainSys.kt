@@ -6,6 +6,7 @@ import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
+import com.mid.bilweatherapp.db.DailyWeatherForecast
 import com.mid.bilweatherapp.json.ApiClient
 import com.mid.bilweatherapp.json.ApiService
 import com.mid.bilweatherapp.json.WeatherResponse
@@ -14,6 +15,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.TimeUnit
+import kotlin.math.log
+
 object MainSys {
     lateinit var weatherService: ApiService
     lateinit var workManager: WorkManager
@@ -37,6 +40,17 @@ object MainSys {
                     val weatherResponse = response.body()
                     Log.d("API Call", "Success: $weatherResponse")
                     // TODO: DATA WILL BE TAKEN FROM HERE INTO DATABASE
+                    for(temp in weatherResponse?.forecast!!.forecastday){
+                        var dailyTemp = DailyWeatherForecast(
+                            weatherResponse.location?.name.toString(),
+                            temp.date.toString(),
+                            temp.day?.maxtempC,
+                            temp.day?.mintempC,
+                            temp.day?.condition?.text,
+                            temp.day?.condition?.icon
+                        )
+                        Log.d("cum", dailyTemp.date)
+                    }
                 } else {
                     Log.e("API Call", "Error: ${response.code()}")
                 }
