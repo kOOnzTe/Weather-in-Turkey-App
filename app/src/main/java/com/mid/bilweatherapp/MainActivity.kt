@@ -19,6 +19,7 @@ import retrofit2.Response
 import retrofit2.Call
 import retrofit2.Callback
 import android.media.MediaPlayer
+import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import com.mid.bilweatherapp.db.DailyWeatherViewModel
 
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var dailyForecastAdapter: DailyForecastRecyclerViewAdapter
     private lateinit var dailyWeatherVM : DailyWeatherViewModel
+    private lateinit var currentCity: String
 
     private var gestureDetector: GestureDetectorCompat? = null
     private lateinit var mediaPlayer: MediaPlayer
@@ -46,9 +48,10 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
         MainSys.dailyWeatherVM = dailyWeatherVM
 
         MainSys.setWorker(this)
+        currentCity = binding.citySpinner.selectedItem.toString()
 
         // Initial JSON Requests
-        MainSys.getWeatherData("Ankara")
+        MainSys.getWeatherData(currentCity)
         // TODO: Burada tek bir initial request kalsın mesela Ankara olan (açılışta ekranda gözüksün diye), sonrasında userdan (mesela textview inputundan) şehir ismi alıp bu fonksiyonun parametresine koyulacak, fonksiyon json request atacak. ama bu user input işi büyük ihtimalle onClick'te falan olmalı onCreate yerine.
 
         // Sound
@@ -88,8 +91,6 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
             }
         }
 
-
-
     }
 
     override fun displayItem(weather: DailyForecast) {
@@ -98,7 +99,8 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
 
     inner class CustomGesture : GestureDetector.SimpleOnGestureListener() {
         override fun onDoubleTap(e: MotionEvent): Boolean { // due to prevent 2 times Snackbar, we used onDoubleTap instead of onDoubleTapEvent
-            Snackbar.make(binding.root, "Double tap gesture detected on the weather app!", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "Refreshing the list!", Snackbar.LENGTH_SHORT).show()
+            MainSys.getWeatherData(currentCity)
             return true
         }
 
