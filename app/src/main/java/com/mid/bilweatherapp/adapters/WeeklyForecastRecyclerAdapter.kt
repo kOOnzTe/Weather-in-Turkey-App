@@ -1,8 +1,6 @@
 package com.mid.bilweatherapp.adapters
 
 import android.content.Context
-import android.icu.text.SimpleDateFormat
-import android.icu.util.Calendar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +11,6 @@ import com.mid.bilweatherapp.R
 import com.mid.bilweatherapp.db.DailyWeatherForecast
 import com.squareup.picasso.Picasso
 import com.mid.bilweatherapp.util.Constants
-import java.util.Locale
 
 class WeeklyForecastRecyclerAdapter(private val context: Context) : RecyclerView.Adapter<WeeklyForecastRecyclerAdapter.ViewHolder>() {
     var weeklyForecastList = emptyList<DailyWeatherForecast>()
@@ -21,13 +18,6 @@ class WeeklyForecastRecyclerAdapter(private val context: Context) : RecyclerView
         weeklyForecastList = item
         notifyDataSetChanged()
     }
-    interface RecyclerAdapterInterface {
-        fun displayItem(weather: DailyWeatherForecast)
-    }
-
-    private val recyclerAdapterInterface: WeeklyForecastRecyclerAdapter.RecyclerAdapterInterface =
-        context as RecyclerAdapterInterface
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context)

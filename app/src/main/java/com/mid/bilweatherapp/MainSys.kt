@@ -16,7 +16,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.TimeUnit
-import kotlin.math.log
 
 object MainSys {
     lateinit var weatherService: ApiService
@@ -43,7 +42,6 @@ object MainSys {
                     dailyWeatherVM.deleteAllForecasts()
                     val weatherResponse = response.body()
                     //Log.d("API Call", "Success: $weatherResponse")
-                    // TODO: DATA WILL BE TAKEN FROM HERE INTO DATABASE
                     for (temp in weatherResponse?.forecast!!.forecastday) {
                         var dailyTemp = DailyWeatherForecast(
                             weatherResponse.location?.name.toString(),

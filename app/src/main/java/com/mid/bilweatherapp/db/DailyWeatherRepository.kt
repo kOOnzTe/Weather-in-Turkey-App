@@ -1,8 +1,6 @@
 package com.mid.bilweatherapp.db
 
 import androidx.lifecycle.LiveData
-import com.mid.bilweatherapp.db.DailyWeatherForecast
-
 
 /*
 Used to access multiple data sources. It is used to seperate code and the architecture

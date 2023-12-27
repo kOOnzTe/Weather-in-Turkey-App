@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mid.bilweatherapp.db.DailyWeatherForecast
 import com.squareup.picasso.Picasso
 import com.mid.bilweatherapp.util.Constants
-import java.util.ArrayList
 import java.util.Locale
 
 class DailyForecastRecyclerViewAdapter(private val context: Context): RecyclerView.Adapter<DailyForecastRecyclerViewAdapter.DailyViewHolder>() {
@@ -21,11 +20,6 @@ class DailyForecastRecyclerViewAdapter(private val context: Context): RecyclerVi
         dailyWeatherList = item
         notifyDataSetChanged()
     }
-    interface RecyclerAdapterInterface {
-        fun displayItem(weather: DailyWeatherForecast)
-    }
-
-    private val recyclerAdapterInterface: RecyclerAdapterInterface = context as RecyclerAdapterInterface
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.daily_weather, parent, false)
@@ -46,9 +40,6 @@ class DailyForecastRecyclerViewAdapter(private val context: Context): RecyclerVi
         holder.dailyMostTemp.text = dailyWeather.maxTemp?.toInt().toString()
         holder.dailyLeastTemp.text = dailyWeather.minTemp?.toInt().toString()
 
-        holder.itemView.setOnClickListener {
-            recyclerAdapterInterface.displayItem(dailyWeather)
-        }
     }
 
     override fun getItemCount(): Int {

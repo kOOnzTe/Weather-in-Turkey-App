@@ -9,11 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mid.bilweatherapp.databinding.ActivityWeeklyForecastBinding
-import com.mid.bilweatherapp.db.DailyWeatherForecast
 import com.mid.bilweatherapp.adapters.WeeklyForecastRecyclerAdapter
 import com.mid.bilweatherapp.db.DailyWeatherViewModel
 
-class WeeklyForecastActivity : AppCompatActivity(), WeeklyForecastRecyclerAdapter.RecyclerAdapterInterface {
+class WeeklyForecastActivity : AppCompatActivity() {
     private lateinit var weeklyForecastAdapter: WeeklyForecastRecyclerAdapter
     private lateinit var binding: ActivityWeeklyForecastBinding
     private lateinit var layoutManager: LinearLayoutManager
@@ -47,10 +46,6 @@ class WeeklyForecastActivity : AppCompatActivity(), WeeklyForecastRecyclerAdapte
             finish()
         }
 
-    }
-
-    override fun displayItem(weather: DailyWeatherForecast) {
-        Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT).show()
     }
 
     fun getData() {

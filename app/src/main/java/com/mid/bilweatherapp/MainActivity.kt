@@ -3,36 +3,25 @@ package com.mid.bilweatherapp
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.mid.bilweatherapp.json.ApiService
-import com.mid.bilweatherapp.json.WeatherResponse
 import com.mid.bilweatherapp.databinding.ActivityMainBinding
-import com.mid.bilweatherapp.json.ApiClient
-import retrofit2.Response
-import retrofit2.Call
-import retrofit2.Callback
 import android.media.MediaPlayer
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.mid.bilweatherapp.db.DailyWeatherForecast
 import com.mid.bilweatherapp.db.DailyWeatherViewModel
 
-class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.RecyclerAdapterInterface {
+class MainActivity : FragmentActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var layoutManager: LinearLayoutManager
@@ -75,7 +64,8 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
         // JSON Request Event Handling
         binding.citySpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
-                MainSys.getWeatherData(binding.citySpinner.getSelectedItem().toString())
+                currentCity = binding.citySpinner.getSelectedItem().toString()
+                MainSys.getWeatherData(currentCity)
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
@@ -122,27 +112,23 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
 
     }
 
-    override fun displayItem(weather: DailyWeatherForecast) {
-
-    }
-
     inner class CustomGesture : GestureDetector.SimpleOnGestureListener() {
         override fun onDoubleTap(e: MotionEvent): Boolean { // due to prevent 2 times Snackbar, we used onDoubleTap instead of onDoubleTapEvent
             Snackbar.make(binding.root, "Refreshing the list!", Snackbar.LENGTH_SHORT).show()
             MainSys.getWeatherData(currentCity)
-            fragment.updateView(MainSys.currentC, dailyForecastAdapter.dailyWeatherList.get(0))
+            //fragment.updateView(MainSys.currentC, dailyForecastAdapter.dailyWeatherList.get(0))
             return true
         }
 
-        override fun onLongPress(e: MotionEvent) {
+        /*override fun onLongPress(e: MotionEvent) {
             Snackbar.make(binding.root, "Long press gesture detected on the weather app!", Snackbar.LENGTH_SHORT).show()
-        }
+        }*/
     }
     fun loadFrag(dynamicFragment: Fragment) {
         val bundle = Bundle()
         //put here the related information for printing
-        bundle.putInt("num1", 10)
-        bundle.putString("num2", "20")
+        //bundle.putInt("num1", 10)
+        //bundle.putString("num2", "20")
         dynamicFragment.arguments = bundle
         fm = supportFragmentManager
         ft = fm.beginTransaction()
