@@ -20,12 +20,16 @@ import retrofit2.Call
 import retrofit2.Callback
 import android.media.MediaPlayer
 import androidx.core.view.get
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.mid.bilweatherapp.db.DailyWeatherForecast
 import com.mid.bilweatherapp.db.DailyWeatherViewModel
 
-class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.RecyclerAdapterInterface {
+class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.RecyclerAdapterInterface {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var layoutManager: LinearLayoutManager
@@ -35,12 +39,16 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
 
     private var gestureDetector: GestureDetectorCompat? = null
     private lateinit var mediaPlayer: MediaPlayer
+
+    lateinit var fragment : TopFragment
+    lateinit var fm: FragmentManager
+    lateinit var ft: FragmentTransaction
     @SuppressLint("ClickableViewAccessibility") // to remove gestureDetector warning
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         // Hiding title bar
-        supportActionBar?.hide()
+        //supportActionBar?.hide()
         setContentView(binding.root)
 
         // Hiding the status bar
@@ -50,11 +58,15 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
         getData()
         MainSys.dailyWeatherVM = dailyWeatherVM
 
+        //initialize fragment
+        fragment = TopFragment()
+        loadFrag(fragment)
 
+        //sets worker
         MainSys.setWorker(this)
-        currentCity = binding.citySpinner.selectedItem.toString()
 
         // Initial JSON Requests
+        currentCity = binding.citySpinner.selectedItem.toString()
         MainSys.getWeatherData(currentCity)
         // TODO: Burada tek bir initial request kalsın mesela Ankara olan (açılışta ekranda gözüksün diye), sonrasında userdan (mesela textview inputundan) şehir ismi alıp bu fonksiyonun parametresine koyulacak, fonksiyon json request atacak. ama bu user input işi büyük ihtimalle onClick'te falan olmalı onCreate yerine.
 
@@ -105,12 +117,24 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
         override fun onDoubleTap(e: MotionEvent): Boolean { // due to prevent 2 times Snackbar, we used onDoubleTap instead of onDoubleTapEvent
             Snackbar.make(binding.root, "Refreshing the list!", Snackbar.LENGTH_SHORT).show()
             MainSys.getWeatherData(currentCity)
+            fragment.updateView("Cloudy", 23.0, "34", "99")
             return true
         }
 
         override fun onLongPress(e: MotionEvent) {
             Snackbar.make(binding.root, "Long press gesture detected on the weather app!", Snackbar.LENGTH_SHORT).show()
         }
+    }
+    fun loadFrag(dynamicFragment: Fragment) {
+        val bundle = Bundle()
+        //put here the related information for printing
+        bundle.putInt("num1", 10)
+        bundle.putString("num2", "20")
+        dynamicFragment.arguments = bundle
+        fm = supportFragmentManager
+        ft = fm.beginTransaction()
+        ft.replace(R.id.frTop, dynamicFragment)
+        ft.commit()
     }
 
     fun getData() {
