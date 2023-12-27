@@ -33,30 +33,18 @@
             android:layout_marginTop="200dp"
             android:entries="@array/city_list" />
 
-        <TextView
-            android:id="@+id/current_weather_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="20dp"
-            android:textColor="@color/lightTextColor"
-            android:text="Güneşli"
-            android:textSize="20sp"
-            android:textStyle="normal" />
-
     </LinearLayout>
 
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="110dp">
+        android:layout_marginTop="85dp">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/frTop"
             android:layout_width="match_parent"
-            android:layout_height="220dp" />
+            android:layout_height="250dp" />
     </FrameLayout>
 
     <RelativeLayout
@@ -83,7 +71,7 @@
             android:layout_centerVertical="true"
             android:paddingVertical="5dp"
 
-            android:text="Haftalık tahmin"
+            android:text="@string/txtWeekly"
             android:textColor="@color/lightTextColor"
             android:textSize="15sp" />
 
@@ -93,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:text="Görmek için >"
+            android:text="@string/txtGoToDetails"
             android:textColor="@color/lightTextColor"
             android:textSize="15sp" />
     </RelativeLayout>

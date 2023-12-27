@@ -23,6 +23,7 @@ class TopFragment : Fragment() {
     }
 
     fun updateView(currentTemp: Double, weather: DailyWeatherForecast) {
+        binding.currentWeatherDesc.text = weather.condition
         binding.textTemp.text = currentTemp.toInt().toString() + getString(R.string.txtTemperatureShort)
         binding.textHumidity.text = weather.humidity + "%"
         binding.textWind.text = weather.wind_kph + " " + getString(R.string.txtWindSpeedMeasurement)

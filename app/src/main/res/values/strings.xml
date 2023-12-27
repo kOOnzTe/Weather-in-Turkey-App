@@ -4,6 +4,8 @@
     <string name="txtTemperatureShort">°</string>
     <string name="txtTemperatureLong">°C</string>
     <string name="txtWindSpeedMeasurement">km/h</string>
+    <string name="txtWeekly">Weekly Forecast</string>
+    <string name="txtGoToDetails">Go to details -></string>
 
 
     <string-array name="city_list">
