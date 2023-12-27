@@ -79,8 +79,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/lightTextColor"
                 android:text="18:00"
+                android:textColor="@color/lightTextColor"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -90,8 +90,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="55dp"
             android:layout_marginEnd="40dp"
-            android:textColor="@color/lightTextColor"
             android:text="25°"
+            android:textColor="@color/lightTextColor"
             android:textSize="35sp" />
 
         <LinearLayout
@@ -108,8 +108,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/lightTextColor"
                 android:text="20°C"
+                android:textColor="@color/lightTextColor"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -117,127 +117,19 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/weekly_day_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/description_layout"
-        android:layout_marginHorizontal="15dp"
-        android:background="@drawable/rounded_rectangle_background"
-        android:paddingHorizontal="15dp"
-        android:paddingVertical="5dp">
-        >
-
-        <TextView
-            android:id="@+id/tv24HourForecast"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:text="24 saatlik tahmin"
-            android:textColor="@color/lightTextColor"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/tvSeeMore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:text="Görmek için >"
-            android:textColor="@color/lightTextColor"
-            android:textSize="15sp" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/hourly_desc_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/weekly_day_description"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/rounded_rectangle_background">
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="true">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="18:00"
-                        android:textColor="@color/lightTextColor"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/sun" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="20°C"
-                        android:textColor="@color/lightTextColor"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="19:00"
-                        android:textColor="@color/lightTextColor"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/cloud" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/lightTextColor"
-                        android:text="18°C"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-                </LinearLayout>
-
-            </LinearLayout>
-        </HorizontalScrollView>
-
-    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/weekly_desc_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/hourly_desc_layout"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/recyclerSocial"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="405dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/rounded_rectangle_background"
         android:paddingHorizontal="15dp"
         android:paddingVertical="5dp">
@@ -265,32 +157,33 @@
             android:textSize="15sp" />
     </RelativeLayout>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/weekly_desc_layout"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="-47dp"
         android:layout_marginBottom="15dp"
-        android:paddingHorizontal="10dp"
-        android:background="@drawable/rounded_rectangle_background">
+        android:background="@drawable/rounded_rectangle_background"
+        android:paddingHorizontal="10dp">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerSocial"
-            android:layout_width="393dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerSocial"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginBottom="39dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </RelativeLayout>
