@@ -20,7 +20,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import android.media.MediaPlayer
 import androidx.core.view.get
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.mid.bilweatherapp.db.DailyWeatherForecast
 import com.mid.bilweatherapp.db.DailyWeatherViewModel
 
 class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.RecyclerAdapterInterface {
@@ -45,7 +47,9 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         dailyWeatherVM = ViewModelProvider(this).get(DailyWeatherViewModel::class.java)
+        getData()
         MainSys.dailyWeatherVM = dailyWeatherVM
+
 
         MainSys.setWorker(this)
         currentCity = binding.citySpinner.selectedItem.toString()
@@ -62,7 +66,7 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
         }
 
         // Prepare the data for the RecyclerView
-        DailyForecastSys.prepareData()
+        //DailyForecastSys.prepareData()
 
         // Set up the RecyclerView
         layoutManager = LinearLayoutManager(this)
@@ -70,7 +74,7 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
         binding.recyclerSocial.layoutManager = layoutManager
 
         // Fill the RecyclerView with the adapter
-        dailyForecastAdapter = DailyForecastRecyclerViewAdapter(this, DailyForecastSys.dailyForecasts)
+        dailyForecastAdapter = DailyForecastRecyclerViewAdapter(this)
         binding.recyclerSocial.adapter = dailyForecastAdapter
 
         // Combined GestureDetector for both "long-press" and "double-tap" Gestures
@@ -93,7 +97,7 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
 
     }
 
-    override fun displayItem(weather: DailyForecast) {
+    override fun displayItem(weather: DailyWeatherForecast) {
 
     }
 
@@ -107,6 +111,13 @@ class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.Recyc
         override fun onLongPress(e: MotionEvent) {
             Snackbar.make(binding.root, "Long press gesture detected on the weather app!", Snackbar.LENGTH_SHORT).show()
         }
+    }
+
+    fun getData() {
+        //Whenever data is changed that change will refresh the recyclerview
+        dailyWeatherVM.readAllData.observe(this, Observer { customers ->
+            dailyForecastAdapter.setData(customers)
+        })
     }
 }
 

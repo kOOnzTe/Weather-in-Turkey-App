@@ -39,6 +39,7 @@ object MainSys {
 
             override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
                 if (response.isSuccessful) {
+                    dailyWeatherVM.deleteAllForecasts()
                     val weatherResponse = response.body()
                     //Log.d("API Call", "Success: $weatherResponse")
                     // TODO: DATA WILL BE TAKEN FROM HERE INTO DATABASE

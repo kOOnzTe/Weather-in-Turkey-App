@@ -10,14 +10,15 @@
         android:id="@+id/daily_day"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textAlignment="textStart"
         android:text="Bugün"
-        android:textColor="@color/lightTextColor"
+        android:textAlignment="textStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/lightTextColor"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@id/daily_icon"
-        app:layout_constraintHorizontal_chainStyle="packed" />
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/daily_date"

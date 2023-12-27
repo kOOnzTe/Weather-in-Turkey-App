@@ -8,14 +8,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mid.bilweatherapp.db.DailyWeatherForecast
+import java.util.ArrayList
 
-class DailyForecastRecyclerViewAdapter(
-    private val context: Context,
-    private val dailyWeatherList: ArrayList<DailyForecast>
-) : RecyclerView.Adapter<DailyForecastRecyclerViewAdapter.DailyViewHolder>() {
-
+class DailyForecastRecyclerViewAdapter(private val context: Context): RecyclerView.Adapter<DailyForecastRecyclerViewAdapter.DailyViewHolder>() {
+    var dailyWeatherList = emptyList<DailyWeatherForecast>()
+    fun setData(item: List<DailyWeatherForecast>){
+        dailyWeatherList = item
+        notifyDataSetChanged()
+    }
     interface RecyclerAdapterInterface {
-        fun displayItem(weather: DailyForecast)
+        fun displayItem(weather: DailyWeatherForecast)
     }
 
     private val recyclerAdapterInterface: RecyclerAdapterInterface = context as RecyclerAdapterInterface
@@ -27,12 +29,11 @@ class DailyForecastRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: DailyViewHolder, position: Int) {
         val dailyWeather = dailyWeatherList[position]
-        holder.dailyDay.text = dailyWeather.day
         holder.dailyDate.text = dailyWeather.date
-        holder.dailyIcon.setImageResource(dailyWeather.icon)
-        holder.dailyDesc.text = dailyWeather.description
-        holder.dailyMostTemp.text = dailyWeather.mostTemp
-        holder.dailyLeastTemp.text = dailyWeather.leastTemp
+        //holder.dailyIcon.setImageResource(dailyWeather.icon)
+        holder.dailyDesc.text = dailyWeather.condition
+        holder.dailyMostTemp.text = dailyWeather.maxTemp?.toInt().toString()
+        holder.dailyLeastTemp.text = dailyWeather.minTemp?.toInt().toString()
 
         holder.itemView.setOnClickListener {
             recyclerAdapterInterface.displayItem(dailyWeather)
@@ -44,7 +45,6 @@ class DailyForecastRecyclerViewAdapter(
     }
 
     inner class DailyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var dailyDay: TextView = itemView.findViewById(R.id.daily_day)
         var dailyDate: TextView = itemView.findViewById(R.id.daily_date)
         var dailyIcon: ImageView = itemView.findViewById(R.id.daily_icon)
         var dailyDesc: TextView = itemView.findViewById(R.id.daily_desc)
