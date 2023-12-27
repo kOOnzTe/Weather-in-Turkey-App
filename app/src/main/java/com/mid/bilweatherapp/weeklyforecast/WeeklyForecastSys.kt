@@ -1,27 +1,22 @@
 package com.mid.bilweatherapp.weeklyforecast
 
 import com.mid.bilweatherapp.R
+import com.mid.bilweatherapp.db.DailyWeatherForecast
+import com.mid.bilweatherapp.db.DailyWeatherViewModel
 import java.util.Collections
 
 object WeeklyForecastSys {
-    lateinit var weeklyForecast: ArrayList<WeeklyForecast>
+    lateinit var weeklyForecast: ArrayList<DailyWeatherForecast>
         private set
 
     fun prepareData() {
         weeklyForecast = ArrayList()
-        Collections.addAll(
-            weeklyForecast,
-            WeeklyForecast("Monday 26/11","Morning", R.drawable.sun, "Sunny", "23°", "Night", R.drawable.cloud, "Partly Cloudy", "18°"),
-            WeeklyForecast("Tuesday 26/11","Morning", R.drawable.sun, "Sunny", "23°", "Night", R.drawable.cloud, "Partly Cloudy", "18°"),
-            WeeklyForecast("Wednesday 26/11","Morning", R.drawable.sun, "Sunny", "23°", "Night", R.drawable.cloud, "Partly Cloudy", "18°"),
-            WeeklyForecast("Thursday 26/11","Morning", R.drawable.sun, "Sunny", "23°", "Night", R.drawable.cloud, "Partly Cloudy", "18°"),
-            WeeklyForecast("Friday 26/11","Morning", R.drawable.sun, "Sunny", "23°", "Night", R.drawable.cloud, "Partly Cloudy", "18°"),
-            WeeklyForecast("Saturday 26/11","Morning", R.drawable.sun, "Sunny", "23°", "Night", R.drawable.cloud, "Partly Cloudy", "18°"),
-            WeeklyForecast("Sunday 26/11","Morning", R.drawable.sun, "Sunny", "23°", "Night", R.drawable.cloud, "Partly Cloudy", "18°"),
+        weeklyForecast.add(
+            DailyWeatherForecast("Ankara", "10/20", 100.0, 20.0, "cummy", "asda", "10", "20")
         )
     }
 
-    fun addItem(forecast: WeeklyForecast) {
+    fun addItem(forecast: DailyWeatherForecast) {
         weeklyForecast.add(forecast)
     }
 
