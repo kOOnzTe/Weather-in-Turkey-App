@@ -38,7 +38,7 @@ object MainSys {
             override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
                 if (response.isSuccessful) {
                     val weatherResponse = response.body()
-                    Log.d("API Call", "Success: $weatherResponse")
+                    //Log.d("API Call", "Success: $weatherResponse")
                     // TODO: DATA WILL BE TAKEN FROM HERE INTO DATABASE
                     for(temp in weatherResponse?.forecast!!.forecastday){
                         var dailyTemp = DailyWeatherForecast(
@@ -49,7 +49,7 @@ object MainSys {
                             temp.day?.condition?.text,
                             temp.day?.condition?.icon
                         )
-                        Log.d("cum", dailyTemp.date)
+                        Log.d("DBTest", dailyTemp.condition.toString())
                     }
                 } else {
                     Log.e("API Call", "Error: ${response.code()}")
