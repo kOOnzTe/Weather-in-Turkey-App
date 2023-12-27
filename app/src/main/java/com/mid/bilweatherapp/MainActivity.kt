@@ -19,6 +19,9 @@ import retrofit2.Response
 import retrofit2.Call
 import retrofit2.Callback
 import android.media.MediaPlayer
+import android.view.View
+import android.widget.AdapterView
+import android.widget.Toast
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -68,7 +71,15 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
         // Initial JSON Requests
         currentCity = binding.citySpinner.selectedItem.toString()
         MainSys.getWeatherData(currentCity)
-        // TODO: Burada tek bir initial request kalsın mesela Ankara olan (açılışta ekranda gözüksün diye), sonrasında userdan (mesela textview inputundan) şehir ismi alıp bu fonksiyonun parametresine koyulacak, fonksiyon json request atacak. ama bu user input işi büyük ihtimalle onClick'te falan olmalı onCreate yerine.
+
+        // JSON Request Event Handling
+        binding.citySpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
+                MainSys.getWeatherData(binding.citySpinner.getSelectedItem().toString())
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        })
 
         // Sound
         mediaPlayer = MediaPlayer.create(this, R.raw.weathermusic)
@@ -143,7 +154,8 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
         //Whenever data is changed that change will refresh the recyclerview
         dailyWeatherVM.readAllData.observe(this, Observer { customers ->
             dailyForecastAdapter.setData(customers)
-            fragment.updateView(MainSys.currentC, dailyForecastAdapter.dailyWeatherList.get(0))
+            if (dailyForecastAdapter.dailyWeatherList.isNotEmpty())
+                fragment.updateView(MainSys.currentC, dailyForecastAdapter.dailyWeatherList.get(0))
         })
     }
 }

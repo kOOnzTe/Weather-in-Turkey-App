@@ -28,10 +28,10 @@ class TopFragment : Fragment() {
         binding.textWind.text = weather.wind_kph + " " + getString(R.string.txtWindSpeedMeasurement)
 
         Picasso.get().load("https://"+ weather.icon)
-            .resize(100,100) //optional, Transform images to better fit into layouts and to reduce memory size.
-            .centerCrop() //optional, Transform images to better fit into layouts and to reduce memory size.
-            .error(R.drawable.sunny)//optional, Picasso supports both download and error placeholders as optional features
-            .into(binding.weatherIcon) //taken image will be displayed on imgItemRecipe view.
+            .resize(100,100)
+            .centerCrop()
+            .error(R.drawable.sunny)
+            .into(binding.weatherIcon)
 
         Log.i("FRAGMENT","Fragment updated")
     }

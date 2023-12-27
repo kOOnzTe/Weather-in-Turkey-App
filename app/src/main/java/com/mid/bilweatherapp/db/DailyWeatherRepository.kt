@@ -13,9 +13,9 @@ class DailyWeatherRepository(private val dailyWeatherDAO: DailyWeatherDAO) {
     fun insertDailyWeatherForecast(dailyWeatherForecast:DailyWeatherForecast){
         dailyWeatherDAO.insertDailyWeatherForecast(dailyWeatherForecast)
     }
-    fun insertDailyWeatherForecast(dailyWeatherForecasts:ArrayList<DailyWeatherForecast>){
+    /*fun insertDailyWeatherForecast(dailyWeatherForecasts:ArrayList<DailyWeatherForecast>){
         dailyWeatherDAO.insertAllDailyWeatherForecast(dailyWeatherForecasts)
-    }
+    }*/
 
     fun updateDailyWeatherForecast(dailyWeatherForecast: DailyWeatherForecast){
         dailyWeatherDAO.updateDailyWeatherForecast(dailyWeatherForecast)
@@ -29,9 +29,9 @@ class DailyWeatherRepository(private val dailyWeatherDAO: DailyWeatherDAO) {
         dailyWeatherDAO.deleteAllDailyWeatherForecasts()
     }
 
-    fun getAllDailyWeatherForecasts():LiveData<List<DailyWeatherForecast>>{
+    /*fun getAllDailyWeatherForecasts():LiveData<List<DailyWeatherForecast>>{
         return dailyWeatherDAO.getAllDailyWeatherForecasts()
-    }
+    }*/
 
     fun getDailyWeatherForecast(location:String, date:String):DailyWeatherForecast{
         return dailyWeatherDAO.getDailyWeatherForecast(location, date)

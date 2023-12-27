@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.mid.bilweatherapp.util.Constants
 
-@Entity(tableName = "cum", primaryKeys = ["location","date"])
+@Entity(tableName = "forecast", primaryKeys = ["location","date"])
 class DailyWeatherForecast (var location:String = "",
                             var date: String = "",
                             var maxTemp: Double? = 0.0,

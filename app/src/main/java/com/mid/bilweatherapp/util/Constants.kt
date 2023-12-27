@@ -8,8 +8,9 @@ object Constants {
 
     const val REQUESTURL: String = "https://api.weatherapi.com/v1/"
     const val DATABASENAME = "forecast"
-    const val TABLENAME = "cum"
+    const val TABLENAME = "forecast"
 
+    // Conversion function
     fun findDayOfWeek(dateString: String): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
         val date = sdf.parse(dateString)

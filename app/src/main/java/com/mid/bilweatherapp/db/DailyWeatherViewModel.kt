@@ -8,9 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-/*
-it provides data to the UI and survive configuration changes. It acts as a communication center between repository and the UI
- */
+
 class DailyWeatherViewModel(application:Application):AndroidViewModel(application) {
     val readAllData: LiveData<List<DailyWeatherForecast>>
     private val repository:DailyWeatherRepository
@@ -20,33 +18,33 @@ class DailyWeatherViewModel(application:Application):AndroidViewModel(applicatio
         readAllData = repository.readAlldata
     }
     fun addForecast(dailyWeatherForecast:DailyWeatherForecast){
-        viewModelScope.launch(Dispatchers.IO){ // that code will be run in background thread, coroutine scope
+        viewModelScope.launch(Dispatchers.IO){
             repository.insertDailyWeatherForecast(dailyWeatherForecast)
         }
     }
-    fun addForecast(dailyWeatherForecasts: List<DailyWeatherForecast>){
-        viewModelScope.launch(Dispatchers.IO) { // that code will be run in background thread, coroutine scope
+    /*fun addForecast(dailyWeatherForecasts: List<DailyWeatherForecast>){
+        viewModelScope.launch(Dispatchers.IO) {
             dailyWeatherForecasts.forEach{
                 repository.insertDailyWeatherForecast(it)
             }
         }
-    }
-    fun deleteForecast(dailyWeatherForecast:DailyWeatherForecast){
-        viewModelScope.launch(Dispatchers.IO){ // that code will be run in background thread, coroutine scope
+    } */
+    /*fun deleteForecast(dailyWeatherForecast:DailyWeatherForecast){
+        viewModelScope.launch(Dispatchers.IO){
             repository.deleteDailyWeatherForecast(dailyWeatherForecast)
         }
-    }
+    }*/
     fun deleteAllForecasts(){
-        viewModelScope.launch(Dispatchers.IO){ // that code will be run in background thread, coroutine scope
+        viewModelScope.launch(Dispatchers.IO){
             repository.deleteAllDailyWeatherForecasts()
         }
     }
-    fun updateForecast(dailyWeatherForecast:DailyWeatherForecast){
-        viewModelScope.launch(Dispatchers.IO){ // that code will be run in background thread, coroutine scope
+    /* fun updateForecast(dailyWeatherForecast:DailyWeatherForecast){
+        viewModelScope.launch(Dispatchers.IO){
             repository.updateDailyWeatherForecast(dailyWeatherForecast)
         }
-    }
-    fun searchForecast(location:String, date: String):DailyWeatherForecast{
+    } */
+    /* fun searchForecast(location:String, date: String):DailyWeatherForecast{
             return repository.getDailyWeatherForecast(location, date)
-    }
+    }*/
 }

@@ -19,7 +19,7 @@ abstract class DailyWeatherRoomDatabase : RoomDatabase() {
     abstract fun dailyWeatherDao(): DailyWeatherDAO
 
     companion object{
-        @Volatile  //it makes that instance to visible to other threads
+        @Volatile
         private var INSTANCE:DailyWeatherRoomDatabase?=null
 
         fun getDatabase(context:Context):DailyWeatherRoomDatabase{
@@ -27,10 +27,7 @@ abstract class DailyWeatherRoomDatabase : RoomDatabase() {
             if(tempInstance !=null){
                 return  tempInstance
             }
-            /*
-            everthing in this block protected from concurrent execution by multiple threads.In this block database instance is created
-            same database instance will be used. If many instance are used, it will be so expensive
-             */
+
             synchronized(this){
                 val  instance =Room.databaseBuilder(context.applicationContext, DailyWeatherRoomDatabase::class.java, Constants.DATABASENAME).build()
                 INSTANCE = instance

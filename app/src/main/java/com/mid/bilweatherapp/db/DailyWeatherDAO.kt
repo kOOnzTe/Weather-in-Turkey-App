@@ -10,14 +10,11 @@ import androidx.room.Update
 import com.mid.bilweatherapp.util.Constants
 
 
-//Data Access Object: It contains all the methods used for accessing to the database. Inside it all the required queries will be created
 @Dao
 interface DailyWeatherDAO {
-    // The conflict strategy defines what happens,if there is an existing entry.
-    // The default action is ABORT.
-    //@Insert(onConflict = OnConflictStrategy.IGNORE) //if there is a conflict it will be ignored, if there is a new customer with the same data it will jut ignored
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertDailyWeatherForecast(customer: DailyWeatherForecast) // suspend is written because it will be used with coroutine
+    fun insertDailyWeatherForecast(customer: DailyWeatherForecast)
 
     @Update
     fun updateDailyWeatherForecast(customer: DailyWeatherForecast)

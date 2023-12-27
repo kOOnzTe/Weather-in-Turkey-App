@@ -35,13 +35,12 @@ class DailyForecastRecyclerViewAdapter(private val context: Context): RecyclerVi
     override fun onBindViewHolder(holder: DailyViewHolder, position: Int) {
         val dailyWeather = dailyWeatherList[position]
         holder.dailyDate.text = Constants.findDayOfWeek(dailyWeather.date)
-        //holder.dailyIcon.setImageResource(dailyWeather.icon)
 
         Picasso.get().load("https://"+dailyWeather.icon)
-            .resize(100,100) //optional, Transform images to better fit into layouts and to reduce memory size.
-            .centerCrop() //optional, Transform images to better fit into layouts and to reduce memory size.
-            .error(R.drawable.sunny)//optional, Picasso supports both download and error placeholders as optional features
-            .into(holder.dailyIcon) //taken image will be displayed on imgItemRecipe view.
+            .resize(100,100)
+            .centerCrop()
+            .error(R.drawable.sunny)
+            .into(holder.dailyIcon)
 
         holder.dailyDesc.text = dailyWeather.condition
         holder.dailyMostTemp.text = dailyWeather.maxTemp?.toInt().toString()

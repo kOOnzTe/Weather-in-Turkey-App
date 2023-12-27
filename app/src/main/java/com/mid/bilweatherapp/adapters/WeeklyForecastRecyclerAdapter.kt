@@ -45,10 +45,10 @@ class WeeklyForecastRecyclerAdapter(private val context: Context) : RecyclerView
         holder.windTv.text = currentItem.wind_kph
 
         Picasso.get().load("https://"+ currentItem.icon)
-            .resize(100,100) //optional, Transform images to better fit into layouts and to reduce memory size.
-            .centerCrop() //optional, Transform images to better fit into layouts and to reduce memory size.
-            .error(R.drawable.sunny)//optional, Picasso supports both download and error placeholders as optional features
-            .into(holder.icon) //taken image will be displayed on imgItemRecipe view.
+            .resize(100,100)
+            .centerCrop()
+            .error(R.drawable.sunny)
+            .into(holder.icon)
 
     }
 
