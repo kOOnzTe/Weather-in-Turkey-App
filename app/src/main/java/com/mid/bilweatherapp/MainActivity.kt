@@ -116,8 +116,8 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
     inner class CustomGesture : GestureDetector.SimpleOnGestureListener() {
         override fun onDoubleTap(e: MotionEvent): Boolean { // due to prevent 2 times Snackbar, we used onDoubleTap instead of onDoubleTapEvent
             Snackbar.make(binding.root, "Refreshing the list!", Snackbar.LENGTH_SHORT).show()
-            MainSys.getWeatherData(currentCity)
-            fragment.updateView("Cloudy", 23.0, "34", "99")
+            var currentC = MainSys.getWeatherData(currentCity)
+            fragment.updateView("Cloudy", 0.0, "34", "99")
             return true
         }
 

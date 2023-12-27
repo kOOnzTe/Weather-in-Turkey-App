@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mid.bilweatherapp.R
 import com.mid.bilweatherapp.db.DailyWeatherForecast
+import com.squareup.picasso.Picasso
 import com.mid.bilweatherapp.util.Constants
 import java.util.Locale
 
@@ -43,6 +44,12 @@ class WeeklyForecastRecyclerAdapter(private val context: Context) : RecyclerView
         holder.humidityTv.text = currentItem.humidity
         holder.windTv.text = currentItem.wind_kph
 
+        Picasso.get().load("https://"+ currentItem.icon)
+            .resize(100,100) //optional, Transform images to better fit into layouts and to reduce memory size.
+            .centerCrop() //optional, Transform images to better fit into layouts and to reduce memory size.
+            .error(R.drawable.sunny)//optional, Picasso supports both download and error placeholders as optional features
+            .into(holder.icon) //taken image will be displayed on imgItemRecipe view.
+
     }
 
     override fun getItemCount(): Int {
@@ -51,15 +58,12 @@ class WeeklyForecastRecyclerAdapter(private val context: Context) : RecyclerView
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val weeklyDayTitle:TextView = itemView.findViewById(R.id.weekly_recycler_desc)
-        val morningIcon: ImageView = itemView.findViewById(R.id.morning_icon)
+        val icon: ImageView = itemView.findViewById(R.id.morning_icon)
         val maxCTv: TextView = itemView.findViewById(R.id.maxCTv)
         val minCTv: TextView = itemView.findViewById(R.id.minCTv)
         val humidityTv: TextView = itemView.findViewById(R.id.humidity_tv)
         val windTv: TextView = itemView.findViewById(R.id.wind_tv)
     }
-
-
-
 
 
 }

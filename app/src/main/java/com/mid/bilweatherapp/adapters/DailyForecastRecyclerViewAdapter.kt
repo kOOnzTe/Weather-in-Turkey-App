@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mid.bilweatherapp.db.DailyWeatherForecast
+import com.squareup.picasso.Picasso
 import com.mid.bilweatherapp.util.Constants
 import java.util.ArrayList
 import java.util.Locale
@@ -35,6 +36,13 @@ class DailyForecastRecyclerViewAdapter(private val context: Context): RecyclerVi
         val dailyWeather = dailyWeatherList[position]
         holder.dailyDate.text = Constants.findDayOfWeek(dailyWeather.date)
         //holder.dailyIcon.setImageResource(dailyWeather.icon)
+
+        Picasso.get().load("https://"+dailyWeather.icon)
+            .resize(100,100) //optional, Transform images to better fit into layouts and to reduce memory size.
+            .centerCrop() //optional, Transform images to better fit into layouts and to reduce memory size.
+            .error(R.drawable.sunny)//optional, Picasso supports both download and error placeholders as optional features
+            .into(holder.dailyIcon) //taken image will be displayed on imgItemRecipe view.
+
         holder.dailyDesc.text = dailyWeather.condition
         holder.dailyMostTemp.text = dailyWeather.maxTemp?.toInt().toString()
         holder.dailyLeastTemp.text = dailyWeather.minTemp?.toInt().toString()
@@ -56,4 +64,16 @@ class DailyForecastRecyclerViewAdapter(private val context: Context): RecyclerVi
         var dailyLeastTemp: TextView = itemView.findViewById(R.id.daily_least_temp)
     }
 
+    fun findDayOfWeek(dateString: String): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        val date = sdf.parse(dateString)
+
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+
+        val days = arrayOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+        return days[dayOfWeek - 1]
+    }
 }

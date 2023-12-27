@@ -43,7 +43,7 @@ object MainSys {
                     val weatherResponse = response.body()
                     //Log.d("API Call", "Success: $weatherResponse")
                     // TODO: DATA WILL BE TAKEN FROM HERE INTO DATABASE
-                    for(temp in weatherResponse?.forecast!!.forecastday){
+                    for (temp in weatherResponse?.forecast!!.forecastday) {
                         var dailyTemp = DailyWeatherForecast(
                             weatherResponse.location?.name.toString(),
                             temp.date.toString(),
@@ -57,11 +57,13 @@ object MainSys {
                         dailyWeatherVM.addForecast(dailyTemp)
                         Log.d("DBTest", dailyTemp.condition.toString())
                     }
+
                 } else {
                     Log.e("API Call", "Error: ${response.code()}")
                 }
             }
         })
+
     }
     fun setWorker(context: Context) {
         val constraints: Constraints = Constraints.Builder()
