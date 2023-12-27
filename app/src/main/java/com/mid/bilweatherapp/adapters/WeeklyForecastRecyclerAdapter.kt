@@ -1,4 +1,4 @@
-package com.mid.bilweatherapp.weeklyforecast
+package com.mid.bilweatherapp.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,13 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mid.bilweatherapp.R
 import com.mid.bilweatherapp.db.DailyWeatherForecast
 
-class WeeklyForecastRecyclerAdapter(
-    private val context: Context,
-    private val weeklyForecastList: ArrayList<DailyWeatherForecast>
-) :
-    RecyclerView.Adapter<WeeklyForecastRecyclerAdapter.ViewHolder>() {
-
-
+class WeeklyForecastRecyclerAdapter(private val context: Context) : RecyclerView.Adapter<WeeklyForecastRecyclerAdapter.ViewHolder>() {
+    var weeklyForecastList = emptyList<DailyWeatherForecast>()
+    fun setData(item: List<DailyWeatherForecast>){
+        weeklyForecastList = item
+        notifyDataSetChanged()
+    }
     interface RecyclerAdapterInterface {
         fun displayItem(weather: DailyWeatherForecast)
     }

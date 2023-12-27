@@ -3,25 +3,29 @@ package com.mid.bilweatherapp
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.mid.bilweatherapp.json.ApiService
+import com.mid.bilweatherapp.json.WeatherResponse
 import com.mid.bilweatherapp.databinding.ActivityMainBinding
+import com.mid.bilweatherapp.json.ApiClient
+import retrofit2.Response
+import retrofit2.Call
+import retrofit2.Callback
 import android.media.MediaPlayer
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.mid.bilweatherapp.db.DailyWeatherForecast
 import com.mid.bilweatherapp.db.DailyWeatherViewModel
 
-class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.RecyclerAdapterInterface {
+class MainActivity : AppCompatActivity(), DailyForecastRecyclerViewAdapter.RecyclerAdapterInterface {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var layoutManager: LinearLayoutManager
@@ -31,17 +35,12 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
 
     private var gestureDetector: GestureDetectorCompat? = null
     private lateinit var mediaPlayer: MediaPlayer
-
-    lateinit var fragment : TopFragment
-
-    lateinit var fm: FragmentManager
-    lateinit var ft: FragmentTransaction
     @SuppressLint("ClickableViewAccessibility") // to remove gestureDetector warning
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         // Hiding title bar
-        //supportActionBar?.hide()
+        supportActionBar?.hide()
         setContentView(binding.root)
 
         // Hiding the status bar
@@ -51,16 +50,12 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
         getData()
         MainSys.dailyWeatherVM = dailyWeatherVM
 
-        //sets worker
-        MainSys.setWorker(this)
 
-        fragment = TopFragment()
-        loadFrag(fragment)
+        MainSys.setWorker(this)
+        currentCity = binding.citySpinner.selectedItem.toString()
 
         // Initial JSON Requests
-        currentCity = binding.citySpinner.selectedItem.toString()
         MainSys.getWeatherData(currentCity)
-
         // TODO: Burada tek bir initial request kalsın mesela Ankara olan (açılışta ekranda gözüksün diye), sonrasında userdan (mesela textview inputundan) şehir ismi alıp bu fonksiyonun parametresine koyulacak, fonksiyon json request atacak. ama bu user input işi büyük ihtimalle onClick'te falan olmalı onCreate yerine.
 
         // Sound
@@ -105,22 +100,10 @@ class MainActivity : FragmentActivity(), DailyForecastRecyclerViewAdapter.Recycl
     override fun displayItem(weather: DailyWeatherForecast) {
 
     }
-    fun loadFrag(dynamicFragment: Fragment) {
-        val bundle=Bundle()
-        //put here the related information for printing
-        bundle.putInt("num1", 10)
-        bundle.putString("num2", "20")
-        dynamicFragment.arguments = bundle
-        fm = supportFragmentManager
-        ft = fm.beginTransaction()
-        ft.replace(R.id.frTop, dynamicFragment)
-        ft.commit()
-    }
 
     inner class CustomGesture : GestureDetector.SimpleOnGestureListener() {
         override fun onDoubleTap(e: MotionEvent): Boolean { // due to prevent 2 times Snackbar, we used onDoubleTap instead of onDoubleTapEvent
             Snackbar.make(binding.root, "Refreshing the list!", Snackbar.LENGTH_SHORT).show()
-            fragment.updateView("Cloudy", 23.0, "34", "99")
             MainSys.getWeatherData(currentCity)
             return true
         }
